@@ -1,32 +1,56 @@
-## Reinforced Epidemic Control: Saving both lives and economy
+intellipolicy.cn
+## Reinforced Epidemic Control: Saving Both Lives and Economy
+
+2020-08-10
+
+We introduce our proposed structure, DURLECA for solving the life-or-economy dilemma in the epidemic control, which was newly accepted by KDD2020 in AI for COVID track. DURLECA could be well deployed in any given urban environment with a certain epidemic phenomenon to provide intelligent mobility restriction policy to minimize the infections as well as maintaining the urban economy. The contribution of DURLECA lies in three folds:
+
+- Bypassing the privacy concern for smart epidemic control by modeling: instead of directly tracing and quarantining risky individuals, we suppress the risk of an epidemic outbreak by estimating and restricting risky inter-regional aggregate mobility.
+
+- Developing DURLECA to dynamically generate customized control action for every inter-regional mobility, which allows a smart solution for the life-or-economy dilemma of epidemic control.
+
+- Innovative approach guaranteeing RL agent’s effcient exploration for effective control policy: we design a novel GNN architecture that can ft the epidemic transmission dynamics. Our RL reward function ensures the capability of effectivepolicy searching by capturing the nature of the trade-off relation between epidemic suppressing and mobility retaining. We also develop two RL exploration strategies that appropriately incorporate epidemic expert knowledge for guiding and stabling the solution exploring.
+
+The original paper, [Reinforced Epidemic Control: Saving Both Lives and Economy](https://arxiv.org/abs/2008.01257) is available.
+
+<center>
+    <img src="./arxiv.png">
+</center>
+
+We also release the original code for DURLECA on [GitHub](https://github.com/anyleopeace/DURLECA/) as follows.
+
+<center>
+    <img src="./github.png">
+</center>
 
 ### Background: The Life-Economy-Privacy Trilemma in Epidemic Control
 
 The epidemic has always been a threat to human society by exposing us in front of a dilemma between saving life or economy. The virus infects gathering people and spreads through daily commute movement. Controlling its infection must cut off daily mobility, which is a pillar of the modern economy. For instance, the recent outbreak of COVID-19 has caused millions of infections and hundreds of thousands of death tolls.  The epidemic forces many municipal governments to issue their stay-at-home order, which is a Fully LockDown (FLD) policy. FLD in most cities lasts for weeks thus deeply hurts the economy. 
 
-<center>
+<!-- <center>
     <img src="./FLD.png">
     <div>Fully Lock Down Policy(FLD)</div>
-</center>
+</center> -->
 
 Some municipals try to only quarantine symptomatic people and their close contacts in the early period of virus spread. However, this infected-individual-quarantine policy would be only implementable when governments are able
-to accurately and comprehensively tracing risky people. It is also unreliable when there exist many asymptomatic infected people. Current computer-science exploration pursues using smartphone data to infer and trace highly-risky people. However, fully tracing individual mobility and contacts requires full coverage of smartphones and further raises the concern of threatening privacy. According to an investigation by the University of Maryland and The Washington Post, around 60% of respondents either prefer not sharing their private information or do not own a smart phone[1].
+to accurately and comprehensively tracing risky people. It is also unreliable when there exist many asymptomatic infected people. Current computer-science exploration pursues using smartphone data to infer and trace highly-risky people. However, fully tracing individual mobility and contacts requires full coverage of smartphones and further raises the concern of threatening privacy. 
+<!-- According to an investigation by the University of Maryland and The Washington Post, around 60% of respondents either prefer not sharing their private information or do not own a smart phone[1]. -->
 
-<center>
+<!-- <center>
     <img src="./IQ.png">
     <div>Individual Quarantine Policy(FLD)</div>
-</center>
+</center> -->
 
 Some experts also suggested herd immunity as a possible solution. However, herd immunity requires no data and suffers no economic loss. However, this policy may lead to high infections and deaths.
 
 The current policies have demonstrated a trilemma between privacy, economy and infections. As a possible solution, we hence introduce our **Reinforced Epidemic Control**, which attempts to control risky inter-regional mobility while not violating indivudual privacy and saves both life and economy.The goal is to lower the probability of risky movements with only relying on the regional statistics, the private data is dispensable.
 
-<center>
+<!-- <center>
     <img src="./Proposal.png">
     <div>Our proposal by controling risky inter-regional mobility </div>
-</center>
+</center> -->
 
-### Challenges: To Generate the Reinforced Epidemic Control Policy
+<!-- ### Challenges: To Generate the Reinforced Epidemic Control Policy
 
 Generating a feasible solution for epidmic control is a high-dimensional sequential decision problem. The challegens distributes mainly in three folds:
 
@@ -44,7 +68,7 @@ Generating a feasible solution for epidmic control is a high-dimensional sequent
 
 The challenges above cause the diffculty of fnding a smart and reliable epidemic-control policy. An implementable control policy cannot continuously quarantine the same urban region for too long. Furthermore, we also hope the policy-searching engine is still reliable even if the virus has diffused for weeks. 
 
-As a result, we develop a **DUalobjective Reinforcement-Learning Epidemic Control Agent (DURLECA)** framework by combining Graph Neural Network and Reinforcement Learning approach, which is detailedly introduced as follows.
+As a result, we develop a **DUalobjective Reinforcement-Learning Epidemic Control Agent (DURLECA)** framework by combining Graph Neural Network and Reinforcement Learning approach, which is detailedly introduced as follows. -->
 
 ### Methodology: the DURLECA Framework
 
@@ -66,7 +90,11 @@ by OD ﬂows, We develop a novel GNN architecture so that GNN can characterize t
 
 3. Exploration strategies. To improve the exploration efficiency, we first generate a pseudo-expert and let it guide exploration. Besides, we forbid the agent exploring some apparently unreasonable policies to help it get rid of local optimums.
 
-### Experiments: the Effectiveness of DURLECA
+### Collabration: An invitation to DURLECA
+
+To better test the generalibility and the stability of our proposed DURLECA framework, we hence welcome all researchers and policy makers who are interested in AI conducted epidemic control for collaborations. All are welcome to download the original DURLECA sources and simulate the control performance with individual urban settings and epidemic parameters. Don't forget to email your result to us and share it with others in the following dashboard!
+
+#### Example With Beijing Dataset
 
 We evaluate DURLECA on a real-world mobility dataset in Beijing. DURLECA gives a sophisticated policy shown in the following Quota-Distributing  Visualization.
 
@@ -85,28 +113,30 @@ Experiments show that DURLECA could maintain most of the mobility as well as kee
 To compare DURLECA and other possible policies that a government might be using, we shown the simulation result in the comparison above. EP-Soft stands for an expert baseline that softly depends on historical mobility loss and current hospitalized to determine whether to lock down a region. Meanwhile, EP-Hard is another expert that can reopen a region if it has been locked down for successive days. Compared with the two baselines, DURLECA simultaneously suppresses the epidemic and retain large amounts of mobility. The mobility control policy searched by DURLECA achieved low values of Mean/Max H, which guarantee the demands for hospitalization will not exceed the capacity in many countries like China. The mobility control policy found by DURLECA also suppresses the total
 infected population at a low level, about 1% of the total population. The red curve in Figure 3 presents the performance of DURLECA in epidemic suppression.
 
-### Collabration: An invitation to DURLECA
-
-To better test the generalibility and the stability of our proposed DURLECA framework, we hence welcome all researchers and policy makers who are interested in AI conducted epidemic control for collaborations. All are welcome to download the original DURLECA sources and simulate the control performance with individual urban settings and epidemic parameters. Don't forget to email your result to us and share it with others in the following dashboard!
-
+<!-- 
 | City       | Performance |
 | --------    | -----:   |
 | Beijing        |    |
-|       |      |
+|       |      | -->
+
+### Research Advisors
+
+- Yang Yu: Assistant Professor of Institute for Interdisciplinary Information Science, Tsinghua University. yangyu1@mail.tsinghua.edu.cn
+
+- Yong Li: Assistant Professor of Department of Electronic Engineering, Tsinghua University. liyong07@tsinghua.edu.cn.
+
+-Xue Liu:  Professor of Department of Electrical and Computer Engineering, McGill University. xueliu@cs.mcgill.ca.
+
+### Research Team
+
+-Sirui Song: PhD student of Department of Electrical and Computer Engineering, McGill University. leo.song@mail.mcgill.ca.
+
+-Zefang Zong: PhD student of Department of Electronic Engineering, Tsinghua University. zongzf19@mails.tsinghua.edu.cn
 
 
-### Resources and Contacts
-[Paper Link: Reinforced Epidemic Control: Saving Both Lives and Economy]()
-
-[KDD2020 VideoPresentation Link:]()
-
-Contacts: siruisong97@gmail.com, zongzefang@hotmail.com
-
-
-
-### References
+<!-- ### References
 [1] C Timberg, D Harwell, and A Safarpour. 2020. Most Americans are not willing or able to use an app tracking coronavirus infections. That’sa problem for Big Tech’s plan to slow the pandemic. Washington Post. Retrieved from [https://www.washingtonpost.com/technology/2020/04/29/most-americans-are-not-willing-orable-use-an-app-tracking-coronavirus-infections-thats-problem-big-techs-planslow-pandemic (2020)](https://www.washingtonpost.com/technology/2020/04/29/most-americans-are-not-willing-orable-use-an-app-tracking-coronavirus-infections-thats-problem-big-techs-planslow-pandemic (2020)).
 
 [2]Figure: J. Kim. GRAPH-BASED TRAJECTORY ANALYSIS. Retrieved from [http://www.jiwonkim.co/graph-based-trajectory-analysis](http://www.jiwonkim.co/graph-based-trajectory-analysis/)
 
-[3]Will Hamilton, Zhitao Ying, and Jure Leskovec. 2017. Inductive representation learning on large graphs. In Advances in neural information processing systems. 1024–1034.
+[3]Will Hamilton, Zhitao Ying, and Jure Leskovec. 2017. Inductive representation learning on large graphs. In Advances in neural information processing systems. 1024–1034. -->
